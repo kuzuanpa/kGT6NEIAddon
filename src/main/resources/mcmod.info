@@ -1,0 +1,16 @@
+[
+{
+  "modid": "kgt6neiaddon",
+  "name": "kGT6NEIAddon",
+  "description": "Provides some lost NEI compact for GT6",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["kuzuanpa"],
+  "credits": "",
+  "logoFile": "kGT6NEIAddon.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]
