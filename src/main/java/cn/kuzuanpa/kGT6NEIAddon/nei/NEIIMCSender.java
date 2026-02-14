@@ -2,11 +2,14 @@ package cn.kuzuanpa.kGT6NEIAddon.nei;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
+import gregapi.data.IL;
 import gregapi.data.MD;
+import gregapi.data.RM;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.recipes.Recipe;
 import gregapi.util.ST;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -20,6 +23,7 @@ import static gregapi.data.CS.*;
 public class NEIIMCSender implements Runnable{
     @Override
     public void run() {
+        putCompactEntries();
         for (Recipe.RecipeMap tMap : Recipe.RecipeMap.RECIPE_MAP_LIST) if (tMap.mNEIAllowed) {
             sortMachines(tMap.mRecipeMachineList);
 
@@ -29,8 +33,30 @@ public class NEIIMCSender implements Runnable{
             for (ItemStack aStack : tMap.mRecipeMachineList) if (ST.valid(aStack)) {
                 sendCatalyst(tMap.mNameNEI,ST.regMeta(aStack) ,getSortedPriority(aStack));
             }
-        };
+        }
         mCatalystPriority = null;
+        removeCompactEntries();
+    }
+
+    /**Because GT6 put these at PostInit, It's too late and IMCMessage won't be accepted by NEI.**/
+    public void putCompactEntries(){
+        RM.Trees     .mRecipeMachineList.add(IL.Bag_Loot_Sapling.get(1));
+        RM.Hammer    .mRecipeMachineList.add(ToolsGT.sMetaTool.make(ToolsGT.HARDHAMMER));
+        RM.Chisel    .mRecipeMachineList.add(ToolsGT.sMetaTool.make(ToolsGT.CHISEL));
+        RM.Chisel    .mRecipeMachineList.add(ToolsGT.sMetaTool.make(ToolsGT.POCKET_CHISEL));
+        RM.ToolHeads .mRecipeMachineList.add(ToolsGT.sMetaTool.make(ToolsGT.PICKAXE));
+        RM.DidYouKnow.mRecipeMachineList.add(ToolsGT.sMetaTool.make(ToolsGT.MAGNIFYING_GLASS));
+
+        RM.ByProductList.mRecipeMachineList.add(ST.make(Items.cauldron, 1, 0));
+    }
+    public void removeCompactEntries(){
+        RM.Trees     .mRecipeMachineList.clear();
+        RM.Hammer    .mRecipeMachineList.clear();
+        RM.Chisel    .mRecipeMachineList.clear();
+        RM.ToolHeads .mRecipeMachineList.clear();
+        RM.DidYouKnow.mRecipeMachineList.clear();
+
+        RM.ByProductList.mRecipeMachineList.clear();
     }
 
     protected HashMap<String, Integer> mCatalystPriority = new HashMap<>();
