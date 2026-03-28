@@ -115,10 +115,10 @@ public class NEIIMCSender implements Runnable{
         aNBT.setString("modId", MD.GT.mID);
         aNBT.setBoolean("modRequired", true);
         aNBT.setString("itemName", aBlock);
-        aNBT.setInteger("handlerHeight", 135);
+        aNBT.setInteger("handlerHeight", 145);
         aNBT.setInteger("handlerWidth", 166);
-        aNBT.setInteger("maxRecipesPerPage", 1);
-        aNBT.setInteger("yShift", 0);
+        aNBT.setInteger("maxRecipesPerPage", 2);
+        aNBT.setInteger("yShift", 15);
         FMLInterModComms.sendMessage("NotEnoughItems", "registerHandlerInfo", aNBT);
     }
 
